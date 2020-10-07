@@ -8,15 +8,21 @@ RUN apt-get update && apt-get install -y curl openssl \
     && add-apt-repository ppa:ubuntugis/ppa --yes \
     && apt-get update -qq \
     && apt-get install -y \
-       cmake \
-       openscenegraph=3.6.3 \
-       gdal-bin \
-       libgdal-dev \
-       libgeos-dev \
-       libsqlite3-dev \
-       protobuf-compiler \
-       libprotobuf-dev \
-       libpoco-dev \
-       git
+    cmake \
+    openscenegraph=3.6.3 \
+    gdal-bin \
+    libgdal-dev \
+    libgeos-dev \
+    libsqlite3-dev \
+    protobuf-compiler \
+    libprotobuf-dev \
+    libpoco-dev \
+    git \
+    unzip
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
+
 RUN git clone https://github.com/gwaldron/osgearth.git
 RUN cd osgearth && cmake -DCMAKE_BUILD_TYPE=Release . && make -j2 && make install && ldconfig
